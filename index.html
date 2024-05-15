@@ -6,59 +6,65 @@
 </head>
 <body>
 <script>
-    const employeesDB = {};
 
-    function Employee(id, name, age, position) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.position = position;
-        this.createEmployeeRecord = function createEmployeeRecord() {
-            if (!employeesDB[this.id]) {
+
+    class employeesDB {
+        static employees = {};
+        constructor(id, name, age, position) {
+            this.id = id;
+            this.name = name;
+            this.age = age;
+            this.position = position;
+
+        }
+        createEmployeeRecord = function createEmployeeRecord() {
+            if (!employeesDB.employees[this.id]) {
                 Object.defineProperty(this, "id", {writable: false})
-                employeesDB[this.id] = {"name": this.name, "age": this.age, "position": this.position}
+                employeesDB.employees[this.id] = {"name": this.name, "age": this.age, "position": this.position}
 
             } else {
                 console.log("User with this id already has")
             }
         }
-        this.updateEmployeeRecord = function updateEmployeeRecord(name, age, position) {
-            if (employeesDB[this.id]) {
+        updateEmployeeRecord = function updateEmployeeRecord(name, age, position) {
+            if (employeesDB.employees[this.id]) {
                 if (!Object.isFrozen(this)) {
                     this.name = name
                     this.age = age;
                     this.position = position
-                    employeesDB[this.id] = {"name": this.name, "age": this.age, "position": this.position}
+                    employeesDB.employees[this.id] = {"name": this.name, "age": this.age, "position": this.position}
                 }
             }
         }
-        this.displayEmployeeRecord = function displayEmployeeRecord() {
-            if (employeesDB[this.id]) {
-                console.log(employeesDB[this.id])
+        displayEmployeeRecord = function displayEmployeeRecord() {
+            if (employeesDB.employees[this.id]) {
+                console.log(employeesDB.employees[this.id])
             }
         }
-        this.freezeEmployeeRecord = function freezeEmployeeRecord() {
-            if (employeesDB[this.id]) {
+        freezeEmployeeRecord = function freezeEmployeeRecord() {
+            if (employeesDB.employees[this.id]) {
                 Object.freeze(this)
             }
         }
-        this.displayEmployeesList = function displayEmployeesList() {
-            if (employeesDB[this.id]) {
-                console.log(employeesDB)
+        displayEmployeesList = function displayEmployeesList() {
+            if (employeesDB.employees[this.id]) {
+                console.log(employeesDB.employees)
             }
         }
-        this.deleteEmployeeRecord = function deleteEmployeeRecord() {
-            if (employeesDB[this.id]) {
-                delete employeesDB[this.id]
+        deleteEmployeeRecord = function deleteEmployeeRecord() {
+            if (employeesDB.employees[this.id]) {
+                delete employeesDB.employees[this.id]
             }
         }
     }
 
 
-    const user1 = new Employee(1, "Andrii", 32, "Operation")
-    const user2 = new Employee(2, "Vladimir", 34, "Sales")
-    const user3 = new Employee(1, "Pavel", 25, "Driver")
-    const user4 = new Employee(4, "Anna", 30, "Architect")
+
+
+    const user1 = new employeesDB(1, "Andrii", 32, "Operation")
+    const user2 = new employeesDB(2, "Vladimir", 34, "Sales")
+    const user3 = new employeesDB(1, "Pavel", 25, "Driver")
+    const user4 = new employeesDB(4, "Anna", 30, "Architect")
     user1.createEmployeeRecord();
     user2.createEmployeeRecord();
     user3.createEmployeeRecord();
